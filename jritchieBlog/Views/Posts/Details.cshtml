@@ -60,12 +60,26 @@
         }
 
         @{
+            // Alternate background-color of Comments display.
+            bool commentFieldBlue = true;
             foreach (var comment in Model.Comments)
             {
-                <div style="background-color:azure">
-                    <p>On @comment.Created, @comment.Author.FullName said:</p>
-                    <p>@comment.Body</p>
-                </div>
+                if (commentFieldBlue)
+                {
+                    <div style="padding:6px; background-color:rgba(30, 80, 150, 0.05); box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
+                        <p style="font-size:smaller"><span style="font-weight:bold">Posted: </span>@comment.Created: &nbsp;<span style="font-weight:bold">@comment.Author.FullName</span> said:</p>
+                        <p>@comment.Body</p>
+                    </div>
+                    commentFieldBlue = false;
+                }
+                else
+                {
+                    <div style="padding:6px; background-color:rgba(0, 153, 153, 0.05); box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
+                        <p style="font-size:smaller"><span style="font-weight:bold">Posted: </span>@comment.Created: &nbsp;<span style="font-weight:bold">@comment.Author.FullName</span> said:</p>
+                        <p>@comment.Body</p>
+                    </div>
+                    commentFieldBlue = true;
+                }
                 <hr class="blue-small" />
             }
         }

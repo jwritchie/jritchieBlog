@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @*<ul class="nav navbar-nav navbar-right">*@
+        @*<ul>
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>*@
+
+        <p>
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    <a href=" @Url.Action("Index", "Manage")" title="Update Account Profile"><span style="color:rgb(30,80,150)">Admin - </span>@ViewBag.Firstname</a>
+                }
+                else if (User.IsInRole("Moderator"))
+                {
+                    <a href=" @Url.Action("Index", "Manage")" title="Update Account Profile"><span style="color:rgb(30,80,150)">Moderator - </span>@ViewBag.Firstname</a>
+                }
+                else
+                {
+                    <a href=" @Url.Action("Index", "Manage")" title="Update Account Profile">Welcome, @ViewBag.Fullname</a>
+                    @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                }
+            }
+        </p>
+
+        <p>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        </p>
+
+    }
+}
+else
+{
+    @*<ul class="nav navbar-nav navbar-right">*@
+    <p>
+        @Html.ActionLink("Register", "Register", "Account", routeValues: new { returnUrl = Request.Url.AbsolutePath }, htmlAttributes: new { id = "registerLink" })
+        <span> or </span>
+        @Html.ActionLink("Log in", "Login", "Account", routeValues: new { returnUrl = Request.Url.AbsolutePath }, htmlAttributes: new { id = "loginLink" })
+    </p>
+
+    <p style="margin-top:-20px">to comment on a Post.</p>
+
+    <ul>
+        @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+    </ul>
+}

@@ -1,0 +1,58 @@
+﻿@model jritchieBlog.Models.Post
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<div style="margin-top:40px; margin-bottom:80px">
+
+    <h2 style="color:rgb(30,80,150)">Delete Post</h2>
+
+    <h4>Are you sure you want to delete this?</h4>
+    <div>
+        <hr class="blue" />
+
+        <div style="margin-top:40px; margin-bottom:40px">
+
+            <div style="border:4px double #009999; margin-bottom:10px; padding:10px">
+
+                <!-- Title -->
+                <p style="font-size:large; font-weight:700; color: #009999; background-color: transparent; text-decoration: none;">@Model.Title</p>
+
+                <!-- Date(s) -->
+                <p style="margin-top:-21px; margin-bottom:0px !important">Posted: <span>@Model.Created</span></p>
+                @{
+                    if (Model.Updated != null)
+                    {
+                        <h6><span style="font-weight:bold; margin-top:-20px">Updated: </span>@Html.DisplayFor(model => model.Created)</h6>
+                    }
+                    else
+                    {
+                        <h6 style="font-weight:bold; margin-top:-20px">&nbsp;</h6>
+                    }
+                }
+
+                <!-- Picture -->
+                <img class="img-responsive" src="@Url.Content(Model.MediaUrl)" style="display:block; margin:auto; max-height:250px; width:auto" />
+
+                <hr class="blue-small" />
+
+                <!-- Body -->
+                @Html.Raw(Model.Body)
+
+            </div>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-primary" /> |
+                @Html.ActionLink("Back to Post", "Details", new { slug = Model.Slug }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
+            </div>
+        }
+    </div>
+
+</div>

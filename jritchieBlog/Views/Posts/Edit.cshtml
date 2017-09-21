@@ -1,0 +1,114 @@
+﻿@model jritchieBlog.Models.Post
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div style="margin-top:40px; margin-bottom:80px">
+
+
+    <h2 style="color:rgb(30,80,150)">Edit Post</h2>
+
+    @using (Html.BeginForm("Edit", "Posts", new { mediaUrl = Model.MediaUrl }, FormMethod.Post, new { enctype = "Multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr class="blue" />
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.Id)                  @*// Values are passed, but are in hidden fields.*@
+            @Html.HiddenFor(model => model.Created)
+            @Html.HiddenFor(model => model.Updated)
+            @Html.HiddenFor(model => model.Slug)
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control", id = "editor", rows = "5" } })
+                    @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.MediaUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MediaUrl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MediaUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="form-group">
+                <label class="control-label col-md-2">Upload new image</label>
+                <div class="col-md-10">
+                    <input name="image" type="file" class="form-control" value="@Model.MediaUrl" />
+                    <img src="@Url.Content(Model.MediaUrl)" style="margin-top:2px; border:2px solid rgb(30,80,150); max-height:293px; width:auto" />
+                    <span style="font-weight:bold">Current image: </span>
+                    <span>@Html.DisplayFor(model => model.MediaUrl)</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @if (!Model.Published)
+                {
+                    <label class="control-label col-md-2" style="color:red">Publish?</label>
+                }
+                else
+                {
+                    @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label col-md-2" })
+                }
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Published, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" /> |
+                    @Html.ActionLink("Back to Post", "Details", new { slug = Model.Slug }, new { style = "color:rgb(30,80,150); text-decoration:underline; margin-bottom:20px" })
+                </div>
+            </div>
+        </div>
+    }
+
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+        <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+        <script type="text/javascript">
+
+            $(function () {
+                tinymce.init({
+                    selector: '#editor'
+                });
+            });
+        </script>
+    }

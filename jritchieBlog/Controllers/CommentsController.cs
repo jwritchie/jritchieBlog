@@ -63,19 +63,14 @@ namespace jritchieBlog.Models
             if (ModelState.IsValid)
             {
                 comment.Created = DateTime.Now;
-
                 comment.AuthorId = User.Identity.GetUserId();
 
                 //comment.AuthorId = db.Users.Find(User.Identity.Name).Id;
-
-
-                
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 
                 //string returnSlug = comment.Post.Slug;
-                
                 return RedirectToAction("Index");
                 //return RedirectToAction("Details", "Posts", new { slug = returnSlug });
 

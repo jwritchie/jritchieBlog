@@ -4,200 +4,134 @@
     ViewBag.Title = "Details";
 }
 
+<div class="col-lg-8 col-md-8 col-sm-8">
 
-<div style="margin-top:40px; margin-bottom:80px">
+    <div style="margin-top:40px; margin-bottom:80px">
 
-    <div style="border:4px double #009999; margin-bottom:10px; padding:10px; box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
+        <div style="border:4px double #009999; margin-bottom:10px; padding:10px; box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
 
-        @{
-            if (!Model.Published)
-            {
-                <p style="color:red; margin-bottom:0px">Unpublished</p>
-            }
-        }
-
-        <!-- Title -->
-        <p style="font-size:large; font-weight:700; color: #009999; background-color: transparent; text-decoration: none;">@Model.Title</p>
-
-        <!-- Date(s) -->
-        <p style="margin-top:-21px; margin-bottom:0px !important; font-size:smaller"><span style="font-weight:bold">Posted: &nbsp;&nbsp;&nbsp;</span>@Model.Created</p>
-        @{
-            if (Model.Updated != null)
-            {
-                <p style="margin-top:0px; font-size:smaller"><span style="font-weight:bold">Updated: </span>@Html.DisplayFor(model => model.Created)</p>
-            }
-            else
-            {
-                <p style="margin-top:0px; font-size:smaller"><span style="font-weight:bold">Updated: </span></p>
-            }
-        }
-
-        <!-- Picture -->
-        <img class="img-responsive" src="@Url.Content(Model.MediaUrl)" style="display:block; margin:auto; max-height:250px; width:auto; box-shadow:2px 2px 3px rgba(30,30,30,0.25)" />
-
-        <hr class="blue-small" />
-
-        <!-- Body -->
-        @Html.Raw(Model.Body)
-
-        <hr class="blue" />
-
-        <!-- Comments -->
-        @if (Model.Comments.Count != 0)
-        {
-            if (Model.Comments.Count == 1)
-            {
-                <p style="color:#009999">@Model.Comments.Count comment.</p>
-            }
-            else
-            {
-                <p style="color:#009999">@Model.Comments.Count comments.</p>
-            }
-        }
-        else
-        {
-            <p style="color:#009999">No Comments.</p>
-        }
-
-        @{
-            // Alternate background-color of Comments display.
-            bool commentFieldBlue = true;
-            foreach (var comment in Model.Comments)
-            {
-                if (commentFieldBlue)
+            @{
+                if (!Model.Published)
                 {
-                    <div style="padding:6px; background-color:rgba(30, 80, 150, 0.05); box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
-                        <p style="font-size:smaller"><span style="font-weight:bold">Posted: </span>@comment.Created: &nbsp;<span style="font-weight:bold">@comment.Author.FullName</span> said:</p>
-                        <p>@comment.Body</p>
-                    </div>
-                    commentFieldBlue = false;
+                    <p style="color:red; margin-bottom:0px">Unpublished</p>
+                }
+            }
+
+            <!-- Title -->
+            <p style="font-size:large; font-weight:700; color: #009999; background-color: transparent; text-decoration: none;">@Model.Title</p>
+
+            <!-- Date(s) -->
+            <p style="margin-top:-21px; margin-bottom:0px !important; font-size:smaller"><span style="font-weight:bold">Posted: &nbsp;&nbsp;&nbsp;</span>@Model.Created</p>
+            @{
+                if (Model.Updated != null)
+                {
+                    <p style="margin-top:0px; font-size:smaller"><span style="font-weight:bold">Updated: </span>@Html.DisplayFor(model => model.Created)</p>
                 }
                 else
                 {
-                    <div style="padding:6px; background-color:rgba(0, 153, 153, 0.05); box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
-                        <p style="font-size:smaller"><span style="font-weight:bold">Posted: </span>@comment.Created: &nbsp;<span style="font-weight:bold">@comment.Author.FullName</span> said:</p>
-                        <p>@comment.Body</p>
-                    </div>
-                    commentFieldBlue = true;
+                    <p style="margin-top:0px; font-size:smaller"><span style="font-weight:bold">Updated: </span></p>
                 }
-                <hr class="blue-small" />
             }
-        }
 
-        @*@{
-            foreach (var item in Model.Comments)
+            <!-- Picture -->
+            <img class="img-responsive" src="@Url.Content(Model.MediaUrl)" style="display:block; margin:auto; max-height:250px; width:auto; box-shadow:2px 2px 3px rgba(30,30,30,0.25)" />
+
+            <hr class="blue-small" />
+
+            <!-- Body -->
+            @Html.Raw(Model.Body)
+
+            <hr class="blue" />
+
+            <!-- Comments -->
+            @if (Model.Comments.Count != 0)
             {
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Comments. item => item.Author.FirstName)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Author.FirstName)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Post.Title)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Post.Title)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Body)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Body)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Created)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Created)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Updated)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Updated)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.UpdateReason)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.UpdateReason)
-                    </dd>
-
-                </dl>
-
-            }
-        }*@
-
-
-
-
-
-        @{if (Request.IsAuthenticated)    // Confirm user is logged in.
-            {
-                // From Create Comments View.
-                @*<div class="form-group">
-                    @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-                using (Html.BeginForm("Create", "Comments", new { PostId = Model.Id }, FormMethod.Post, null ))
+                if (Model.Comments.Count == 1)
                 {
-                    @Html.AntiForgeryToken()
-                    <div>
-                        <input name="Body" type="text" placeholder="Leave a Comment" value="@ViewBag.Comment" />
-                        <button class="btn btn-primary" type="submit">Submit Comment</button>
-                    </div>
-        }
-
-
-                //Borrowed from Shopping app.
-                @*<div class="col-md-12 text-center" style="margin-top:10px">
-                    @using (Html.BeginForm("Create", "Comments", new { id = Model.Id }, FormMethod.Get, null))
+                    <p style="color:#009999">@Model.Comments.Count comment.</p>
+                }
+                else
                 {
-                        @Html.AntiForgeryToken()
-                        <input type="submit" value="Submit Comment" class="btn btn-primary" />
-                    }
-                </div>*@
-            }
-        }
-
-        @{
-            if (User.IsInRole("Admin"))
-            {
-                <p style="text-align:center; padding:20px 0px 10px 0px">
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
-                    <span>|</span>
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
-                    <span>|</span>
-                    @Html.ActionLink("Back to Posts", "Index", null, new { style = "color:rgb(30,80,150); text-decoration:underline" })
-                </p>
+                    <p style="color:#009999">@Model.Comments.Count comments.</p>
+                }
             }
             else
             {
-                <p style="text-align:center; padding:20px 0px 10px 0px">
-                    @Html.ActionLink("Back to Posts", "Index", null, new { style = "color:rgb(30,80,150); text-decoration:underline" })
-                </p>
+                <p style="color:#009999">No Comments.</p>
             }
-        }
-    </div>
-</div>
 
+            @{
+                // Alternate background-color of Comments display.
+                bool commentFieldBlue = true;
+                foreach (var comment in Model.Comments)
+                {
+                    if (commentFieldBlue)
+                    {
+                        <div style="padding:6px; background-color:rgba(30, 80, 150, 0.05); box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
+                            <p style="font-size:smaller"><span style="font-weight:bold">Posted: </span>@comment.Created: &nbsp;<span style="font-weight:bold">@comment.Author.FullName</span> said:</p>
+                            <p>@comment.Body</p>
+
+                            @{
+                                if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                {
+                                    <div style="text-align:center">
+                                        @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, new { style = "color:red" }) |
+                                        @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, new { style = "color:orange" })
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                        commentFieldBlue = false;
+                    }
+                    else
+                    {
+                        <div style="padding:6px; background-color:rgba(0, 153, 153, 0.05); box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
+                            <p style="font-size:smaller"><span style="font-weight:bold">Posted: </span>@comment.Created: &nbsp;<span style="font-weight:bold">@comment.Author.FullName</span> said:</p>
+                            <p>@comment.Body</p>
+                        </div>
+                        commentFieldBlue = true;
+                    }
+                    <hr class="blue-small" />
+                }
+            }
+
+
+            @{if (Request.IsAuthenticated)    // Confirm user is logged in.
+                {
+                    using (Html.BeginForm("Create", "Comments", new { PostId = Model.Id }, FormMethod.Post, null))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div>
+                            <input name="Body" type="text" placeholder="Leave a Comment" value="@ViewBag.Comment" />
+                            <button class="btn btn-primary" type="submit">Submit Comment</button>
+                        </div>
+                    }
+                }
+            }
+
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    <p style="text-align:center; padding:20px 0px 10px 0px">
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
+                        <span>|</span>
+                        @Html.ActionLink("Back to Posts", "Index", null, new { style = "color:rgb(30,80,150); text-decoration:underline" })
+                    </p>
+                }
+                else
+                {
+                    <p style="text-align:center; padding:20px 0px 10px 0px">
+                        @Html.ActionLink("Back to Posts", "Index", null, new { style = "color:rgb(30,80,150); text-decoration:underline" })
+                    </p>
+                }
+            }
+        </div>
+    </div>
+
+</div>
 
     @*<p>
             @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

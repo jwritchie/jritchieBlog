@@ -18,46 +18,46 @@
         <!-- Page Content -->
         <div class="container">
             <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8">
 
+                    <!-- Post Content Column -->
+                    <div style="border:4px double #009999; margin-bottom:10px; padding:10px; box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
 
-                <!-- Post Content Column -->
-                <div style="border:4px double #009999; margin-bottom:10px; padding:10px; box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
-
-                    @{
-                        if (!item.Published)
-                        {
-                            <p style="color:red; margin-bottom:0px">Unpublished</p>
+                        @{
+                            if (!item.Published)
+                            {
+                                <p style="color:red; margin-bottom:0px">Unpublished</p>
+                            }
                         }
-                    }
 
-                    <!-- Title -->
-                    <a href="@Url.Action("Details", "Posts", new { slug = item.Slug })" style="font-size:large; font-weight:700; color: #009999; background-color: transparent; text-decoration: none">@item.Title</a>
+                        <!-- Title -->
+                        <a href="@Url.Action("Details", "Posts", new { slug = item.Slug })" style="font-size:large; font-weight:700; color: #009999; background-color: transparent; text-decoration: none">@item.Title</a>
 
-                    <!-- Date/Time -->
-                    <p style="margin-bottom:35px; font-size:smaller"><span style="font-weight:bold">Posted: &nbsp;&nbsp;&nbsp;</span>@item.Created</p>
+                        <!-- Date/Time -->
+                        <p style="margin-bottom:35px; font-size:smaller"><span style="font-weight:bold">Posted: &nbsp;&nbsp;&nbsp;</span>@item.Created</p>
 
-                    <!-- Preview Image -->
-                    <a href="@Url.Action("Details", "Posts", new { slug = item.Slug })">
-                        <img class="img-responsive" src="@Url.Content(item.MediaUrl)" style="display:block; margin:auto; max-height:250px; width:auto; box-shadow:2px 2px 3px rgba(30,30,30,0.25)" />
-                    </a>
-
-                    <hr class="blue-small" />
-
-                    <!-- Post Excerpt -->
-                    <div>
-                        <a href="@Url.Action("Details", "Posts", new { slug = item.Slug })" style="color: black; background-color: transparent; text-decoration: none;">
-                            @Html.Raw(item.Excerpt)
+                        <!-- Preview Image -->
+                        <a href="@Url.Action("Details", "Posts", new { slug = item.Slug })">
+                            <img class="img-responsive" src="@Url.Content(item.MediaUrl)" style="display:block; margin:auto; max-height:250px; width:auto; box-shadow:2px 2px 3px rgba(30,30,30,0.25)" />
                         </a>
-                    </div>
 
+                        <hr class="blue-small" />
+
+                        <!-- Post Excerpt -->
+                        <div>
+                            <a href="@Url.Action("Details", "Posts", new { slug = item.Slug })" style="color: black; background-color: transparent; text-decoration: none;">
+                                @Html.Raw(item.Excerpt)
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     }
 
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
-
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
 
 
 </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -33,14 +34,15 @@ namespace jritchieBlog.Models
         {
             get
             {
-                //return Body.Substring(0, 30);
                 if (Body.Length < 250)
                 {
-                    return Body;
+                    return Regex.Replace(Body, "<.*?>", String.Empty) + " ...";
+                    //return Body;
                 }
                 else
                 {
-                    return Body.Substring(0, 250) + " ...";
+                    return Regex.Replace(Body.Substring(0, 250), "<.*?>", String.Empty) + " ...";
+                    //return Body.Substring(0, 250) + " ...";
                 }
             }
         }

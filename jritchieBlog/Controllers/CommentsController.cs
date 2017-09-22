@@ -57,11 +57,13 @@ namespace jritchieBlog.Models
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment)
+        public ActionResult Create([Bind(Include = "Id,PostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment, String postToReturnTo)
         {
 
             if (ModelState.IsValid)
             {
+                //string postToReturnTo = comment.Post.Slug;
+
                 comment.Created = DateTime.Now;
                 comment.AuthorId = User.Identity.GetUserId();
 
@@ -70,15 +72,14 @@ namespace jritchieBlog.Models
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 
-                //string returnSlug = comment.Post.Slug;
-                return RedirectToAction("Index");
-                //return RedirectToAction("Details", "Posts", new { slug = returnSlug });
-
+                //return RedirectToAction("Index");
+                return RedirectToAction("Details", "Posts", new { slug = postToReturnTo });
             }
 
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.PostId = new SelectList(db.Posts, "Id", "Title", comment.PostId);
-            return View(comment);
+            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
+            //ViewBag.PostId = new SelectList(db.Posts, "Id", "Title", comment.PostId);
+            //return View(comment);
+            return RedirectToAction("Details", "Posts", new { slug = postToReturnTo });
         }
 
         // GET: Comments/Edit/5
@@ -94,8 +95,8 @@ namespace jritchieBlog.Models
             {
                 return HttpNotFound();
             }
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.PostId = new SelectList(db.Posts, "Id", "Title", comment.PostId);
+            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
+            //ViewBag.PostId = new SelectList(db.Posts, "Id", "Title", comment.PostId);
             return View(comment);
         }
 
@@ -105,16 +106,21 @@ namespace jritchieBlog.Models
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment)
+        public ActionResult Edit([Bind(Include = "Id,PostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment, String postToReturnTo )
         {
             if (ModelState.IsValid)
             {
+                //string postToReturnTo =         //comment.Post.Slug;
+
+                comment.Updated = DateTime.Now;
+
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("Details", "Posts", new { slug = postToReturnTo });
             }
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.PostId = new SelectList(db.Posts, "Id", "Title", comment.PostId);
+            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
+            //ViewBag.PostId = new SelectList(db.Posts, "Id", "Title", comment.PostId);
             return View(comment);
         }
 
@@ -141,9 +147,13 @@ namespace jritchieBlog.Models
         public ActionResult DeleteConfirmed(int id)
         {
             Comment comment = db.Comments.Find(id);
+
+            string postToReturnTo = comment.Post.Slug;
+
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Details", "Posts", new { slug = postToReturnTo });
         }
 
         protected override void Dispose(bool disposing)

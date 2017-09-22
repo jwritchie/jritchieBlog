@@ -65,30 +65,59 @@
                 bool commentFieldBlue = true;
                 foreach (var comment in Model.Comments)
                 {
-                    if (commentFieldBlue)
+                    if (commentFieldBlue)   // Comment with Blue background.
                     {
                         <div style="padding:6px; background-color:rgba(30, 80, 150, 0.05); box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
                             <p style="font-size:smaller"><span style="font-weight:bold">Posted: </span>@comment.Created: &nbsp;<span style="font-weight:bold">@comment.Author.FullName</span> said:</p>
                             <p>@comment.Body</p>
 
-                            @{
-                                if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                            @{  // Display Comment-Update information if available. 
+                                if (comment.Updated != null)
                                 {
-                                    <div style="text-align:center">
-                                        @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, new { style = "color:red" }) |
-                                        @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, new { style = "color:orange" })
+                                    <div style="border:1px solid #009999; margin: 0px 10px 6px 10px; padding: 10px 10px 0px 10px">
+                                        <p style="font-size:smaller"><span style="font-weight:bold">Edited by Moderator: </span>@comment.Updated</p>
+                                        <p style="font-size:smaller; margin-top:-18px"><span style="font-weight:bold">Reason: </span>@comment.UpdateReason</p>
                                     </div>
                                 }
                             }
 
+                            @{  // Allow Admin & Moderator to Edit/Delete Comments.
+                                if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                {
+                                    <div style="text-align:center">
+                                        @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" }) |
+                                        @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" })
+                                    </div>
+                                }
+                            }
                         </div>
                         commentFieldBlue = false;
                     }
-                    else
+                    else                    // Comment with Green background.
                     {
                         <div style="padding:6px; background-color:rgba(0, 153, 153, 0.05); box-shadow:2px 2px 3px rgba(30,30,30,0.25)">
                             <p style="font-size:smaller"><span style="font-weight:bold">Posted: </span>@comment.Created: &nbsp;<span style="font-weight:bold">@comment.Author.FullName</span> said:</p>
                             <p>@comment.Body</p>
+
+                            @{  // Display Comment-Update information if available.
+                                if (comment.Updated != null)
+                                {
+                                    <div style="border:1px solid #009999; margin: 0px 10px 6px 10px; padding: 10px 10px 0px 10px">
+                                        <p style="font-size:smaller"><span style="font-weight:bold">Edited by Moderator: </span>@comment.Updated</p>
+                                        <p style="font-size:smaller; margin-top:-18px"><span style="font-weight:bold">Reason: </span>@comment.UpdateReason</p>
+                                    </div>
+                                }
+                            }
+
+                            @{  // Allow Admin & Moderator to Edit/Delete Comments.
+                                if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                {
+                                    <div style="text-align:center">
+                                        @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" }) |
+                                        @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" })
+                                    </div>
+                                }
+                            }
                         </div>
                         commentFieldBlue = true;
                     }
@@ -97,20 +126,21 @@
             }
 
 
-            @{if (Request.IsAuthenticated)    // Confirm user is logged in.
+            @{if (Request.IsAuthenticated)    // Confirm user is logged in before allowing Comment creation.
                 {
-                    using (Html.BeginForm("Create", "Comments", new { PostId = Model.Id }, FormMethod.Post, null))
+                    using (Html.BeginForm("Create", "Comments", new { PostId = Model.Id, postToReturnTo = Model.Slug }, FormMethod.Post, null))
                     {
                         @Html.AntiForgeryToken()
                         <div>
-                            <input name="Body" type="text" placeholder="Leave a Comment" value="@ViewBag.Comment" />
-                            <button class="btn btn-primary" type="submit">Submit Comment</button>
+                            <textarea rows="5" name="Body" style="max-width:none !important; width:100%">@ViewBag.Comment</textarea>
+                            @*<input name="Body" type="text" placeholder="Leave a Comment" value="@ViewBag.Comment" />*@
+                            <button class="btn btn-primary center-block" type="submit">Submit Comment</button>
                         </div>
                     }
                 }
             }
 
-            @{
+            @{  // Determine who can Edit/Delete the post.
                 if (User.IsInRole("Admin"))
                 {
                     <p style="text-align:center; padding:20px 0px 10px 0px">

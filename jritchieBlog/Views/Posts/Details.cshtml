@@ -63,7 +63,7 @@
             @{
                 // Alternate background-color of Comments display.
                 bool commentFieldBlue = true;
-                foreach (var comment in Model.Comments)
+                foreach (var comment in Model.Comments.OrderByDescending(c => c.Id))
                 {
                     if (commentFieldBlue)   // Comment with Blue background.
                     {
@@ -75,18 +75,18 @@
                                 if (comment.Updated != null)
                                 {
                                     <div style="border:1px solid #009999; margin: 0px 10px 6px 10px; padding: 10px 10px 0px 10px">
-                                        <p style="font-size:smaller"><span style="font-weight:bold">Edited by Moderator: </span>@comment.Updated</p>
+                                        <p style="font-size:smaller"><span style="font-weight:bold">Edited: </span>@comment.Updated</p>
                                         <p style="font-size:smaller; margin-top:-18px"><span style="font-weight:bold">Reason: </span>@comment.UpdateReason</p>
                                     </div>
                                 }
                             }
 
-                            @{  // Allow Admin & Moderator to Edit/Delete Comments.
-                                if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                            @{  // Allow Admin, Moderator(s), and original Commenter to Edit/Delete Comments.
+                                if (User.IsInRole("Admin") || User.IsInRole("Moderator") || ViewBag.UserId == comment.Author)
                                 {
                                     <div style="text-align:center">
-                                        @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" }) |
-                                        @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" })
+                                        @Html.ActionLink("Edit Comment", "Edit", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" }) |
+                                        @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" })
                                     </div>
                                 }
                             }
@@ -100,21 +100,21 @@
                             <p>@comment.Body</p>
 
                             @{  // Display Comment-Update information if available.
-                                if (comment.Updated != null)
+                                if (comment.Updated != null && comment.UpdateReason != null)
                                 {
                                     <div style="border:1px solid #009999; margin: 0px 10px 6px 10px; padding: 10px 10px 0px 10px">
-                                        <p style="font-size:smaller"><span style="font-weight:bold">Edited by Moderator: </span>@comment.Updated</p>
+                                        <p style="font-size:smaller"><span style="font-weight:bold">Edited: </span>@comment.Updated</p>
                                         <p style="font-size:smaller; margin-top:-18px"><span style="font-weight:bold">Reason: </span>@comment.UpdateReason</p>
                                     </div>
                                 }
                             }
 
-                            @{  // Allow Admin & Moderator to Edit/Delete Comments.
-                                if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                            @{  // Allow Admin, Moderator(s), and original Commenter to Edit/Delete Comments.                              
+                                if (User.IsInRole("Admin") || User.IsInRole("Moderator") || ViewBag.UserId == comment.Author)
                                 {
                                     <div style="text-align:center">
-                                        @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" }) |
-                                        @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" })
+                                        @Html.ActionLink("Edit Comment", "Edit", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" }) |
+                                        @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.Id }, new { style = "color:rgb(30,80,150)" })
                                     </div>
                                 }
                             }
@@ -144,9 +144,9 @@
                 if (User.IsInRole("Admin"))
                 {
                     <p style="text-align:center; padding:20px 0px 10px 0px">
-                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
+                        @Html.ActionLink("Edit Post", "Edit", new { id = Model.Id }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
                         <span>|</span>
-                        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
+                        @Html.ActionLink("Delete Post", "Delete", new { id = Model.Id }, new { style = "color:rgb(30,80,150); text-decoration:underline" })
                         <span>|</span>
                         @Html.ActionLink("Back to Posts", "Index", null, new { style = "color:rgb(30,80,150); text-decoration:underline" })
                     </p>

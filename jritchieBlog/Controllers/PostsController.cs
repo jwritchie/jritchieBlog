@@ -12,6 +12,7 @@ using jritchieBlog.Helpers;
 using System.IO;
 using PagedList;
 using PagedList.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace jritchieBlog.Controllers
 {
@@ -156,6 +157,9 @@ namespace jritchieBlog.Controllers
 
         public ActionResult Details(string slug)
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ViewBag.UserId = user;
+
             if (String.IsNullOrWhiteSpace(slug))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -15,19 +15,22 @@ namespace jritchieBlog.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return Redirect("https://jritchie-blog.azurewebsites.net/");
+            //return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return Redirect("http://jritchie-portfolio.azurewebsites.net/");
+            //return View();
         }
 
         public ActionResult Contact()
         {
-            return View();
+            return Redirect("http://jritchie-portfolio.azurewebsites.net/Home/Contact");
+            //return View();
         }
 
         [HttpPost]

@@ -409,6 +409,7 @@
     <Content Include="Assets\Images\DefaultImage.png" />
     <Content Include="Assets\Images\Uploads\adobe red.PNG" />
     <Content Include="Assets\Images\Uploads\green star.png" />
+    <Content Include="Assets\Images\Uploads\octopus.jpg" />
     <Content Include="Assets\Images\Uploads\slug.jpg" />
     <Content Include="Content\blog-home.css" />
     <Content Include="Content\blog-post.css" />

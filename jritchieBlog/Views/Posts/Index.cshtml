@@ -15,7 +15,7 @@
 
     @foreach (var item in Model)
     {
-        <!-- Page Content -->
+    <!-- Page Content -->
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-8">
@@ -56,8 +56,18 @@
         </div>
     }
 
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
-
+    <!-- Pagination controls -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <div style="text-align:center">
+                    <div style="color:rgb(30,80,150); margin-top:10px">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</div>
+                    <div style="margin-top:-18px">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

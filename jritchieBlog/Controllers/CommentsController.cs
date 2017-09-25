@@ -21,6 +21,7 @@ namespace jritchieBlog.Models
         //private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
+        [Authorize(Roles ="Admin")]
         public ActionResult Index()
         {
             var comments = db.Comments.Include(c => c.Author).Include(c => c.Post);
@@ -28,6 +29,7 @@ namespace jritchieBlog.Models
         }
 
         // GET: Comments/Details/5
+        [Authorize(Roles ="Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)

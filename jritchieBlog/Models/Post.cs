@@ -36,12 +36,12 @@ namespace jritchieBlog.Models
             {
                 if (Body.Length < 250)
                 {
-                    return Regex.Replace(Body, "<.*?>", String.Empty) + " ...";
+                    return Regex.Replace(Body, "<.*?>", String.Empty);
                     //return Body;
                 }
                 else
                 {
-                    return Regex.Replace(Body.Substring(0, 250), "<.*?>", String.Empty) + " ...";
+                    return Regex.Replace(Body.Substring(0, 250), "<.*?>", String.Empty) + "...";
                     //return Body.Substring(0, 250) + " ...";
                 }
             }

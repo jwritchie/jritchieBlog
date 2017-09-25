@@ -59,6 +59,8 @@ namespace jritchieBlog.Controllers
             SearchHelper search = new SearchHelper();
             var blogList = search.IndexSearch(searchStr);
 
+            ViewBag.SearchCount = blogList.Count();
+
             if (Request.IsAuthenticated && User.IsInRole("Admin"))          // Confirm user is logged-in AND 'Admin'.
             {
                 // Return all posts matching searchTerm.

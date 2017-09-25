@@ -1,10 +1,11 @@
 ﻿@model jritchieBlog.Models.Post
+
 @{
     ViewBag.Title = "Edit";
 }
 
-<div class="col-lg-8 col-md-8 col-sm-8" style="margin-top:20px; margin-bottom:80px">
 
+<div class="col-lg-8 col-md-8 col-sm-8" style="margin-top:20px; margin-bottom:80px">
 
     <h2 style="color:rgb(30,80,150)">Edit Post</h2>
 
@@ -21,6 +22,7 @@
             @Html.HiddenFor(model => model.Created)
             @Html.HiddenFor(model => model.Updated)
             @Html.HiddenFor(model => model.Slug)
+
             @*<div class="form-group">
                     @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -96,8 +98,7 @@
             </div>
         </div>
     }
-
-    </div>
+</div>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

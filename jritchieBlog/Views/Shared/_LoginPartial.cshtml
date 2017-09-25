@@ -26,8 +26,15 @@
                 }
                 else
                 {
-                    <a href=" @Url.Action("Index", "Manage")" title="Update Account Profile">Welcome, @ViewBag.Fullname</a>
-                    @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                    if (ViewBag.Firstname == null || ViewBag.LastName == null)
+                    {
+                        @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                        <a href=" @Url.Action("Index", "Manage")" title="Update Account Profile">Welcome, @User.Identity.GetUserName()</a>
+                    }
+                    else
+                    {
+                        <a href=" @Url.Action("Index", "Manage")" title="Update Account Profile">Welcome, @ViewBag.Fullname</a>
+                    }
                 }
             }
         </p>
